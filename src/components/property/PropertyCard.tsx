@@ -5,7 +5,7 @@ import type { PropertyCard } from '@/types'
 import Badge from '@/components/ui/Badge'
 import ImagePlaceholder from '@/components/property/ImagePlaceholder'
 import HeartButton from '@/components/property/HeartButton'
-import { formatPrice, LISTING_TYPE_LABELS, bedroomLabel } from '@/lib/utils'
+import { formatPrice, LISTING_TYPE_LABELS, bedroomLabel, IMAGE_BLUR } from '@/lib/utils'
 
 export default function PropertyCard({ property }: { property: PropertyCard }) {
   const { id, title, listingType, price, priceUnit, bedrooms, bathrooms, areaSqft,
@@ -16,6 +16,7 @@ export default function PropertyCard({ property }: { property: PropertyCard }) {
       <div className="relative h-44 bg-slate-100 overflow-hidden">
         {primaryImageUrl ? (
           <Image src={primaryImageUrl} alt={title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            placeholder="blur" blurDataURL={IMAGE_BLUR}
             className="object-cover group-hover:scale-105 transition-transform duration-300" />
         ) : (
           <ImagePlaceholder label={false} />

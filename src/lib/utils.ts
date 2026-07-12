@@ -79,3 +79,9 @@ export function timeAgo(dateStr: string): string {
   const months = Math.floor(days / 30)
   return months === 1 ? '1 month ago' : `${months} months ago`
 }
+
+// Sage-tinted 8x8 blur placeholder for next/image — fills the frame until the
+// real photo loads instead of a blank pop-in. One shared constant; remote R2
+// images can't have per-image blurDataURLs without a build-time pipeline.
+export const IMAGE_BLUR =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAIAAABLbSncAAAACXBIWXMAAAPoAAAD6AG1e1JrAAAAEUlEQVR4nGO4//QGVsQwtCQAQlenAWbDP3YAAAAASUVORK5CYII='

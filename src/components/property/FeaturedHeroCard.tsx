@@ -4,7 +4,7 @@ import { Bed, Bath, Maximize2 } from 'lucide-react'
 import type { PropertyCard } from '@/types'
 import ImagePlaceholder from '@/components/property/ImagePlaceholder'
 import HeartButton from '@/components/property/HeartButton'
-import { formatPrice, bedroomLabel } from '@/lib/utils'
+import { formatPrice, bedroomLabel, IMAGE_BLUR } from '@/lib/utils'
 
 /** Large hero showcase card for the home page — the single featured property.
  *  Photo fills the card; the detail panel is overlaid on the bottom of the image. */
@@ -14,6 +14,7 @@ export default function FeaturedHeroCard({ property, priority = false }: { prope
     <Link href={`/properties/${id}`} className="group relative block rounded-3xl overflow-hidden shadow-card h-[28rem] sm:h-[34rem]">
       {primaryImageUrl ? (
         <Image src={primaryImageUrl} alt={title} fill priority={priority} sizes="(max-width: 1024px) 100vw, 40vw"
+          placeholder="blur" blurDataURL={IMAGE_BLUR}
           className="object-cover group-hover:scale-105 transition-transform duration-300" />
       ) : (
         <div className="absolute inset-0"><ImagePlaceholder label={false} /></div>

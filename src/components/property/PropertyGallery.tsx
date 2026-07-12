@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { PropertyImage } from '@/types'
+import { IMAGE_BLUR } from '@/lib/utils'
 import ImagePlaceholder from './ImagePlaceholder'
 
 interface Props {
@@ -29,7 +30,8 @@ export default function PropertyGallery({ images, title, children }: Props) {
     <div>
       <div className="relative h-80 md:h-96 bg-slate-100 rounded-2xl overflow-hidden group">
         {current ? (
-          <Image src={current.url} alt={title} fill priority sizes="(max-width: 768px) 100vw, 66vw" className="object-cover" />
+          <Image src={current.url} alt={title} fill priority sizes="(max-width: 768px) 100vw, 66vw"
+            placeholder="blur" blurDataURL={IMAGE_BLUR} className="object-cover" />
         ) : (
           <ImagePlaceholder />
         )}
@@ -73,7 +75,7 @@ export default function PropertyGallery({ images, title, children }: Props) {
                 i === active ? 'border-brand-600' : 'border-transparent hover:border-slate-300'
               }`}
             >
-              <Image src={img.url} alt="" fill sizes="80px" className="object-cover" />
+              <Image src={img.url} alt="" fill sizes="80px" placeholder="blur" blurDataURL={IMAGE_BLUR} className="object-cover" />
             </button>
           ))}
         </div>
