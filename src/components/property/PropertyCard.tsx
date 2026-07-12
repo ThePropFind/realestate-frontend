@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { MapPin, Bed, Bath, Maximize2 } from 'lucide-react'
 import type { PropertyCard } from '@/types'
 import Badge from '@/components/ui/Badge'
@@ -14,8 +15,8 @@ export default function PropertyCard({ property }: { property: PropertyCard }) {
       className="group bg-white rounded-2xl border border-slate-100 shadow-soft overflow-hidden hover:border-brand-200 hover:shadow-card transition-all duration-200 block">
       <div className="relative h-44 bg-slate-100 overflow-hidden">
         {primaryImageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={primaryImageUrl} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+          <Image src={primaryImageUrl} alt={title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover group-hover:scale-105 transition-transform duration-300" />
         ) : (
           <ImagePlaceholder label={false} />
         )}

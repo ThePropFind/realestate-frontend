@@ -109,7 +109,7 @@ export default function AdminListingPreview() {
                     className={`w-16 h-12 rounded-lg overflow-hidden shrink-0 border-2 transition-colors
                       ${activeImg === idx ? 'border-brand-600' : 'border-transparent'}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={img.url} alt="" className="w-full h-full object-cover" />
+                    <img src={img.url} alt="" loading="lazy" className="w-full h-full object-cover" />
                   </button>
                 ))}
               </div>

@@ -25,7 +25,7 @@ export default function FeaturedHeroCarousel({ properties }: { properties: Prope
   }, [count, paused, index])
 
   if (count === 0) return null
-  if (count === 1) return <FeaturedHeroCard property={properties[0]} />
+  if (count === 1) return <FeaturedHeroCard property={properties[0]} priority />
 
   return (
     <div
@@ -45,7 +45,7 @@ export default function FeaturedHeroCarousel({ properties }: { properties: Prope
             )}
             aria-hidden={i !== index}
           >
-            <FeaturedHeroCard property={p} />
+            <FeaturedHeroCard property={p} priority={i === 0} />
           </div>
         ))}
       </div>

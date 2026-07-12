@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { PropertyImage } from '@/types'
 import ImagePlaceholder from './ImagePlaceholder'
@@ -28,8 +29,7 @@ export default function PropertyGallery({ images, title, children }: Props) {
     <div>
       <div className="relative h-80 md:h-96 bg-slate-100 rounded-2xl overflow-hidden group">
         {current ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={current.url} alt={title} className="w-full h-full object-cover" />
+          <Image src={current.url} alt={title} fill priority sizes="(max-width: 768px) 100vw, 66vw" className="object-cover" />
         ) : (
           <ImagePlaceholder />
         )}
@@ -69,12 +69,11 @@ export default function PropertyGallery({ images, title, children }: Props) {
               type="button"
               onClick={() => setActive(i)}
               aria-label={`View photo ${i + 1}`}
-              className={`w-20 h-16 rounded-lg overflow-hidden shrink-0 bg-slate-100 border-2 transition ${
+              className={`relative w-20 h-16 rounded-lg overflow-hidden shrink-0 bg-slate-100 border-2 transition ${
                 i === active ? 'border-brand-600' : 'border-transparent hover:border-slate-300'
               }`}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img.url} alt="" className="w-full h-full object-cover" />
+              <Image src={img.url} alt="" fill sizes="80px" className="object-cover" />
             </button>
           ))}
         </div>

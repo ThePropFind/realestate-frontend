@@ -420,7 +420,7 @@ export default function EditPropertyPage() {
                     {existingImages.map((img, i) => (
                       <div key={img.id} className="relative aspect-square rounded-xl overflow-hidden bg-slate-100">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={img.url} alt="" className="w-full h-full object-cover" />
+                        <img src={img.url} alt="" loading="lazy" className="w-full h-full object-cover" />
                         {(img.isPrimary || i === 0) && (
                           <span className="absolute bottom-1 left-1 bg-brand-600 text-white text-xs px-1.5 py-0.5 rounded">Cover</span>
                         )}

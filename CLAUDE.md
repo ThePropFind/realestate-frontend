@@ -84,9 +84,11 @@ if (!isLoggedIn) return null
 ```
 
 ## Brand colours — use these ONLY, never invent new ones
+"Green Growth" palette (matches mobile `src/theme/colors.ts`); full ramps in `tailwind.config.ts`:
 ```
-brand-50:   #e6f1fb    brand-600: #185FA5    brand-800: #0c447c
-accent-400: #D85A30    accent-600: #993c1d
+brand-50:  #e6ece1 (sage tint)   brand-200: #a3b18a (Sage)   brand-600: #184a45 (Forest Green)   brand-800: #0f332f
+accent-400: #c6a15b (Brass Gold)  accent-600: #a67f3e
+slate-50 is overridden to Warm Ivory #F7F3ED (page background)
 ```
 
 ## API rules

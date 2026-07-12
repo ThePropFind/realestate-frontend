@@ -75,7 +75,7 @@ export default function IncomingBookings() {
                 <div className="w-16 h-12 rounded-xl bg-slate-100 overflow-hidden shrink-0 flex items-center justify-center">
                   {b.propertyImageUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={b.propertyImageUrl} alt="" className="w-full h-full object-cover" />
+                    <img src={b.propertyImageUrl} alt="" loading="lazy" className="w-full h-full object-cover" />
                   ) : (
                     <svg className="w-6 h-6 text-slate-300" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg>
                   )}

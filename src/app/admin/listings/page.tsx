@@ -124,7 +124,7 @@ export default function AdminListingsPage() {
                       <div className="w-12 h-10 rounded-lg bg-slate-100 overflow-hidden shrink-0 flex items-center justify-center">
                         {p.primaryImageUrl
                           // eslint-disable-next-line @next/next/no-img-element
-                          ? <img src={p.primaryImageUrl} alt="" className="w-full h-full object-cover" />
+                          ? <img src={p.primaryImageUrl} alt="" loading="lazy" className="w-full h-full object-cover" />
                           : <span className="text-slate-200 text-lg">⌂</span>}
                       </div>
                       <div className="min-w-0">
@@ -172,7 +172,7 @@ export default function AdminListingsPage() {
                     <div className="w-14 h-12 rounded-lg bg-slate-100 overflow-hidden shrink-0 flex items-center justify-center">
                       {p.primaryImageUrl
                         // eslint-disable-next-line @next/next/no-img-element
-                        ? <img src={p.primaryImageUrl} alt="" className="w-full h-full object-cover" />
+                        ? <img src={p.primaryImageUrl} alt="" loading="lazy" className="w-full h-full object-cover" />
                         : <span className="text-slate-200 text-lg">⌂</span>}
                     </div>
                     <div className="min-w-0 flex-1">

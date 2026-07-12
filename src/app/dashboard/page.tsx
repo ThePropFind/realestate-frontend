@@ -91,7 +91,17 @@ export default function DashboardPage() {
           </div>
 
           {loading ? (
-            <div className="p-8 text-center text-slate-400 text-sm">Loading...</div>
+            <div className="divide-y divide-slate-50">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-4 px-5 py-4">
+                  <div className="w-16 h-12 rounded-xl bg-slate-100 animate-pulse shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-3.5 w-2/5 rounded bg-slate-100 animate-pulse" />
+                    <div className="h-3 w-1/4 rounded bg-slate-100 animate-pulse" />
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : data?.content.length === 0 ? (
             <div className="p-12 text-center">
               <p className="text-slate-400 mb-4">You haven&apos;t posted any listings yet.</p>
@@ -110,7 +120,7 @@ export default function DashboardPage() {
                     <div className="w-16 h-12 rounded-xl bg-slate-100 overflow-hidden shrink-0 flex items-center justify-center">
                       {property.primaryImageUrl ? (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img src={property.primaryImageUrl} alt="" className="w-full h-full object-cover" />
+                        <img src={property.primaryImageUrl} alt="" loading="lazy" className="w-full h-full object-cover" />
                       ) : (
                         <svg className="w-6 h-6 text-slate-300" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 3L21 12V21H15V15H9V21H3V12Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg>
                       )}

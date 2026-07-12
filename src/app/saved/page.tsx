@@ -39,7 +39,11 @@ export default function SavedPage() {
         </div>
 
         {loading ? (
-          <div className="p-12 text-center text-slate-400 text-sm">Loading…</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-slate-100 shadow-soft h-64 animate-pulse" />
+            ))}
+          </div>
         ) : !data || data.content.length === 0 ? (
           <div className="p-16 text-center bg-white rounded-2xl border border-slate-100 shadow-soft">
             <div className="w-12 h-12 rounded-full bg-brand-50 flex items-center justify-center mx-auto mb-4">
