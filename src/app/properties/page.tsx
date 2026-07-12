@@ -382,8 +382,15 @@ function PropertiesContent() {
 export default function PropertiesPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="text-slate-400 text-sm">Loading properties...</div>
+      <div className="min-h-screen bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 py-8 animate-pulse">
+          <div className="h-12 bg-white rounded-2xl border border-slate-100 mb-6" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-slate-100 shadow-soft h-64" />
+            ))}
+          </div>
+        </div>
       </div>
     }>
       <PropertiesContent />
