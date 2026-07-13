@@ -29,6 +29,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: '**.amazonaws.com' },
+      // Prod images — Cloudflare R2 public CDN (next/image needs the host whitelisted)
+      { protocol: 'https', hostname: '**.r2.dev' },
       // Dev MinIO (docker-compose port 9000)
       { protocol: 'http',  hostname: 'localhost', port: '9000' },
       // Dev local file upload (backend at :8080/uploads/)
