@@ -8,10 +8,9 @@ const minioProtocol = process.env.NEXT_PUBLIC_MINIO_PROTOCOL || 'http'
 const minioPort     = process.env.NEXT_PUBLIC_MINIO_PORT     || '9000'
 
 // ── HTTP security headers (OWASP A02: Security Misconfiguration) ──
-// Applied to every route. These five are safe defaults that don't risk
-// breaking the app. CSP is intentionally left out here — a wrong CSP
-// silently breaks Next's inline scripts/styles and map embeds; add it
-// only after testing in a preview deploy (template at the bottom).
+// Applied to every route. The CSP includes Google Maps hosts; a wrong CSP
+// silently breaks Next's inline scripts/styles and map embeds, so verify on
+// a Vercel preview (maps/images/Sentry must load) before trusting in prod.
 const securityHeaders = [
   // Force HTTPS for 2 years incl. subdomains (Vercel serves HTTPS already)
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
@@ -23,6 +22,20 @@ const securityHeaders = [
   { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
   // Drop access to powerful browser features we don't use
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(self)' },
+  // ponytail: verify on a Vercel preview (maps/images/Sentry must still load) before trusting in prod
+  {
+    key: 'Content-Security-Policy',
+    value: [
+      "default-src 'self'",
+      // Next needs inline/eval; maps.googleapis.com serves the Maps JS API
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https://pub-1d38c33a31264275aaf5f4a132823315.r2.dev https://maps.googleapis.com https://maps.gstatic.com https://*.googleapis.com https://*.gstatic.com",
+      "connect-src 'self' https://realestate-backend-tgbv.onrender.com https://*.ingest.sentry.io https://maps.googleapis.com",
+      "frame-ancestors 'self'",
+    ].join('; '),
+  },
 ]
 
 const nextConfig = {
@@ -43,23 +56,6 @@ const nextConfig = {
     return [{ source: '/:path*', headers: securityHeaders }]
   },
 }
-
-// ── Content-Security-Policy template (enable after preview testing) ──
-// Add this object into `securityHeaders` once verified against a Vercel
-// preview deploy. Tune connect-src to your real API host + Sentry ingest,
-// and img-src to your R2 CDN. Test maps/images/Sentry still load.
-//
-//   {
-//     key: 'Content-Security-Policy',
-//     value: [
-//       "default-src 'self'",
-//       "script-src 'self' 'unsafe-inline' 'unsafe-eval'",   // Next needs inline; tighten with nonces later
-//       "style-src 'self' 'unsafe-inline'",
-//       "img-src 'self' data: blob: https://pub-1d38c33a31264275aaf5f4a132823315.r2.dev",
-//       "connect-src 'self' https://realestate-backend-tgbv.onrender.com https://*.ingest.sentry.io",
-//       "frame-ancestors 'self'",
-//     ].join('; '),
-//   }
 
 // Wrap with Sentry. Source-map upload only runs when SENTRY_AUTH_TOKEN +
 // SENTRY_ORG + SENTRY_PROJECT are set (CI/Vercel); otherwise it's a no-op

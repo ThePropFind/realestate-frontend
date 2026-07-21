@@ -3,7 +3,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { useAuthStore } from '@/store/authStore'
-import { Menu, X, LogOut, PlusCircle, LayoutDashboard, Bell, Heart, ChevronDown, User } from 'lucide-react'
+import { Menu, X, LogOut, PlusCircle, LayoutDashboard, Heart, ChevronDown, User } from 'lucide-react'
+import NotificationsBell from './NotificationsBell'
 
 const NAV_LINKS: [string, string][] = [
   ['Buy', '/properties?listingType=SALE'],
@@ -52,10 +53,7 @@ export default function Navbar() {
               buttons for users who are already signed in. */}
           {_hasHydrated && isLoggedIn && user ? (
             <>
-              <button type="button" aria-label="Notifications"
-                className="w-10 h-10 flex items-center justify-center rounded-full border border-white/25 text-white/90 hover:bg-white/10 transition-colors">
-                <Bell size={18} />
-              </button>
+              <NotificationsBell />
               <div className="relative" ref={dropRef}>
                 <button onClick={() => setDropOpen(!dropOpen)}
                   className="flex items-center gap-2 text-sm border border-white/25 rounded-full pl-2 pr-3 py-1.5 text-white hover:bg-white/10 transition-colors">
