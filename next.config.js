@@ -7,6 +7,33 @@ const minioHost     = process.env.NEXT_PUBLIC_MINIO_HOST
 const minioProtocol = process.env.NEXT_PUBLIC_MINIO_PROTOCOL || 'http'
 const minioPort     = process.env.NEXT_PUBLIC_MINIO_PORT     || '9000'
 
+// ── CSP host allowlists — DERIVED, never hardcoded ──
+// These used to be literal hostnames and silently went stale during the
+// 2026-07 account migration: connect-src still named the old Render backend,
+// so every browser-side API call was CSP-blocked in prod while the ISR
+// homepage (server-side fetch, no CSP) kept looking healthy. Derive them from
+// the same env vars the app already uses so they cannot drift again.
+const apiOrigin = (() => {
+  const raw = process.env.NEXT_PUBLIC_API_URL // e.g. https://host/api
+  if (!raw) return 'http://localhost:8080'    // local default (backend dev port)
+  try { return new URL(raw).origin } catch { return 'http://localhost:8080' }
+})()
+
+// Image CDN: the R2 public bucket. Wildcard covers any r2.dev bucket id, and
+// NEXT_PUBLIC_MINIO_HOST covers a custom/self-hosted CDN host when set.
+const imgHosts = [
+  'https://*.r2.dev',
+  // Port only when explicitly configured — minioPort's '9000' default is for
+  // local docker MinIO and would wrongly port-scope a prod CDN host.
+  ...(minioHost
+    ? [`${minioProtocol}://${minioHost}${process.env.NEXT_PUBLIC_MINIO_PORT ? `:${process.env.NEXT_PUBLIC_MINIO_PORT}` : ''}`]
+    : []),
+]
+
+// Sentry ingest. Newer Sentry orgs are region-scoped (o123.ingest.us.sentry.io),
+// which does NOT match *.ingest.sentry.io — allow both forms.
+const sentryHosts = ['https://*.ingest.sentry.io', 'https://*.ingest.us.sentry.io']
+
 // ── HTTP security headers (OWASP A02: Security Misconfiguration) ──
 // Applied to every route. The CSP includes Google Maps hosts; a wrong CSP
 // silently breaks Next's inline scripts/styles and map embeds, so verify on
@@ -31,8 +58,8 @@ const securityHeaders = [
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
-      "img-src 'self' data: blob: https://pub-1d38c33a31264275aaf5f4a132823315.r2.dev https://maps.googleapis.com https://maps.gstatic.com https://*.googleapis.com https://*.gstatic.com",
-      "connect-src 'self' https://realestate-backend-tgbv.onrender.com https://*.ingest.sentry.io https://maps.googleapis.com",
+      `img-src 'self' data: blob: ${imgHosts.join(' ')} https://maps.googleapis.com https://maps.gstatic.com https://*.googleapis.com https://*.gstatic.com`,
+      `connect-src 'self' ${apiOrigin} ${sentryHosts.join(' ')} https://maps.googleapis.com`,
       "frame-ancestors 'self'",
     ].join('; '),
   },
