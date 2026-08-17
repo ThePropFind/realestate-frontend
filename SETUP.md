@@ -45,7 +45,7 @@ Then check `.env.local`:
 
 ```ini
 NEXT_PUBLIC_API_URL=http://localhost:8080/api      # points at your local Spring Boot
-NEXT_PUBLIC_GOOGLE_MAPS_KEY=your_google_maps_api_key
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key
 ```
 
 The API URL default is correct for local dev. The Google Maps key is optional — map features
