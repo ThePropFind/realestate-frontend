@@ -41,7 +41,10 @@ export interface PropertyCard {
 
 export interface PropertyImage { id: string; url: string; isPrimary: boolean; sortOrder: number }
 export interface Amenity       { id: string; name: string; category: string; iconKey: string }
-export interface OwnerInfo     { id: string; name: string; phone: string | null; profilePhotoUrl: string | null; role: UserRole; agencyName: string | null; avgRating: number | null }
+export interface OwnerInfo     { id: string; name: string; phone: string | null; profilePhotoUrl: string | null; role: UserRole
+  /** Email confirmed via OTP. NOT an identity check — never label this "Verified Owner". */
+  isEmailVerified: boolean
+  memberSince: string | null }
 
 export interface PropertyDocument {
   id: string
