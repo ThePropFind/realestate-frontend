@@ -41,7 +41,10 @@ export interface PropertyCard {
 
 export interface PropertyImage { id: string; url: string; isPrimary: boolean; sortOrder: number }
 export interface Amenity       { id: string; name: string; category: string; iconKey: string }
-export interface OwnerInfo     { id: string; name: string; phone: string | null; profilePhotoUrl: string | null; role: UserRole; agencyName: string | null; avgRating: number | null }
+export interface OwnerInfo     { id: string; name: string; phone: string | null; profilePhotoUrl: string | null; role: UserRole
+  /** Email confirmed via OTP. NOT an identity check — never label this "Verified Owner". */
+  isEmailVerified: boolean
+  memberSince: string | null }
 
 export interface PropertyDocument {
   id: string
@@ -66,8 +69,13 @@ export interface PropertyDetail {
   availableFrom: string | null; parkingAvailable: boolean
   preferredTenant: PreferredTenant | null
   addressLine: string | null
+  /** Six-digit PIN. Null on listings posted before it was collected (V16). */
+  pincode: string | null
   latitude: number | null; longitude: number | null; localityName: string; localitySlug: string
-  cityName: string; citySlug: string; isFeatured: boolean; isVerified: boolean
+  cityName: string; citySlug: string
+  /** State of `cityName` — the last line of the printed address. */
+  cityState: string | null
+  isFeatured: boolean; isVerified: boolean
   viewsCount: number; inquiryCount: number; images: PropertyImage[]; amenities: Amenity[]
   owner: OwnerInfo; createdAt: string; expiresAt: string
   documents?: PropertyDocument[] | null
