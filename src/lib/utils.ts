@@ -25,7 +25,7 @@ export const PROPERTY_TYPE_LABELS: Record<PropertyType, string> = {
   APARTMENT: 'Apartment', INDEPENDENT_HOUSE: 'Independent house', VILLA: 'Villa',
   PLOT: 'Plot', COMMERCIAL_OFFICE: 'Commercial office', COMMERCIAL_SHOP: 'Commercial shop',
   BUILDER_FLOOR: 'Builder floor', PG_HOSTEL: 'PG / Hostel',
-  AGRICULTURAL_LAND: 'Agricultural land',
+  AGRICULTURAL_LAND: 'Agricultural land', WAREHOUSE: 'Warehouse',
 }
 
 export const FURNISHING_LABELS: Record<FurnishingStatus, string> = {

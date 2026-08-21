@@ -1,7 +1,7 @@
 // src/types/index.ts — mirrors Spring Boot DTOs exactly
 
 export type ListingType     = 'SALE' | 'RENT' | 'PG'
-export type PropertyType    = 'APARTMENT' | 'INDEPENDENT_HOUSE' | 'VILLA' | 'PLOT' | 'COMMERCIAL_OFFICE' | 'COMMERCIAL_SHOP' | 'BUILDER_FLOOR' | 'PG_HOSTEL' | 'AGRICULTURAL_LAND'
+export type PropertyType    = 'APARTMENT' | 'INDEPENDENT_HOUSE' | 'VILLA' | 'PLOT' | 'COMMERCIAL_OFFICE' | 'COMMERCIAL_SHOP' | 'BUILDER_FLOOR' | 'PG_HOSTEL' | 'AGRICULTURAL_LAND' | 'WAREHOUSE'
 export type FurnishingStatus = 'UNFURNISHED' | 'SEMI_FURNISHED' | 'FULLY_FURNISHED'
 export type PreferredTenant = 'FAMILY' | 'BACHELOR_MEN' | 'BACHELOR_WOMEN' | 'ANYONE'
 export type ListingStatus   = 'DRAFT' | 'PENDING_REVIEW' | 'ACTIVE' | 'EXPIRED' | 'REJECTED' | 'SOLD_RENTED'
@@ -15,6 +15,8 @@ export type OwnershipType     = 'SINGLE' | 'JOINT' | 'GIFT' | 'INHERITED' | 'COM
 export type SoilType          = 'RED' | 'BLACK' | 'ALLUVIAL' | 'LATERITE' | 'SANDY' | 'CLAY' | 'LOAM' | 'OTHER'
 export type WaterSource       = 'BOREWELL' | 'OPEN_WELL' | 'CANAL' | 'RIVER' | 'RAIN_FED' | 'NONE'
 export type ElectricService   = 'AVAILABLE_3PHASE' | 'AVAILABLE_1PHASE' | 'AGRI_CONNECTION' | 'NONE'
+export type PossessionStatus  = 'READY_TO_MOVE' | 'UNDER_CONSTRUCTION' | 'NEW_LAUNCH'
+export type Facing          = 'NORTH' | 'SOUTH' | 'EAST' | 'WEST' | 'NORTH_EAST' | 'NORTH_WEST' | 'SOUTH_EAST' | 'SOUTH_WEST'
 
 export interface UserInfo {
   id: string; name: string; email: string; phone: string | null
@@ -36,6 +38,8 @@ export interface PropertyCard {
   areaSqft: number; furnishing: FurnishingStatus; localityName: string; cityName: string
   latitude: number | null; longitude: number | null
   isFeatured: boolean; isVerified: boolean; primaryImageUrl: string | null
+  imageCount: number
+  priceNegotiable: boolean; parkingCount: number | null
   viewsCount: number; createdAt: string
 }
 
@@ -98,6 +102,17 @@ export interface SearchParams {
   minPrice?: number; maxPrice?: number; minBedrooms?: number; maxBedrooms?: number
   minArea?: number; maxArea?: number; furnishing?: FurnishingStatus
   featuredOnly?: boolean; keyword?: string; page?: number; size?: number; sort?: string
+  // ── Advanced filters (filter screen) — OR within a group, AND across groups.
+  possessionStatuses?: PossessionStatus[]; listedBys?: ListedBy[]
+  facings?: Facing[]; approvalAuthorities?: ApprovalAuthority[]
+  /** "Has ALL of these", not any-of. */
+  amenityIds?: string[]
+  /** Multi-select localities. */
+  localityIds?: string[]
+  minBathrooms?: number; maxFloor?: number; maxAge?: number
+  parkingRequired?: boolean; verifiedOnly?: boolean; negotiableOnly?: boolean
+  // ── Map viewport — all four required together, or the box is ignored.
+  neLat?: number; neLng?: number; swLat?: number; swLng?: number
 }
 
 export interface City     { id: string; name: string; state: string; slug: string; active: boolean }
